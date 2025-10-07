@@ -22,6 +22,10 @@ Clonez le repository sur votre ordinateur :
 ```bash
 git clone https://github.com/ali-hou-supaero/stat_project_weather.git
 ```
+ou via SSH
+```bash
+git@github.com:ali-hou-supaero/ETL_Project_Kontakt.git
+```
 
 ## 2. Créer et passer sur votre propre branche
 
@@ -54,8 +58,6 @@ git add nom_du_fichier.ipynb
 Cette commande prépare le fichier pour être sauvegardé.
 C’est comme mettre vos feuilles dans un classeur.
 
-Ne faites pas git add .
-Cela ajoute tous les fichiers du projet, y compris les fichiers inutiles ou lourds (comme les CSV).
 
 4.2 Sauvegarder localement avec un message
 ```bash
@@ -90,6 +92,11 @@ Une fois vos modifications terminées et testées, envoyez votre branche sur Git
 ```bash
 git push origin prenom-nom
 ```
+Avec l'exemple précédent :
+```bash
+git push origin ali-analyse-temp
+```
+
 Explication :
 
 push : envoie vos modifications locales sur GitHub.
