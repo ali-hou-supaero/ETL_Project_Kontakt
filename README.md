@@ -20,7 +20,7 @@ En résumé :
 Clonez le repository sur votre ordinateur :
 
 ```bash
-git clone https://github.com/ali-hou-supaero/stat_project_weather.git
+git clone https://github.com/ali-hou-supaero/ETL_Project_Kontakt.git
 ```
 ou via SSH
 ```bash
