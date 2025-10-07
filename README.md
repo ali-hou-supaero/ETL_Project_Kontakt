@@ -30,9 +30,9 @@ Avant de commencer à travailler, créez une nouvelle branche à votre nom ou au
 git checkout -b prenom-nom
 ```
 Exemple :
-
+```bash
 git checkout -b ali-analyse-temp
-
+```
 Explication :
 
 checkout -b : crée une nouvelle branche et vous place directement dessus.
@@ -47,8 +47,9 @@ Modifiez, ajoutez ou supprimez des fichiers dans votre environnement local (par 
 
 4. Sauvegarder vos modifications en local
 4.1 Préparer les fichiers à sauvegarder
+```bash
 git add nom_du_fichier.ipynb
-
+```
 
 Cette commande prépare le fichier pour être sauvegardé.
 C’est comme mettre vos feuilles dans un classeur.
@@ -57,8 +58,9 @@ Ne faites pas git add .
 Cela ajoute tous les fichiers du projet, y compris les fichiers inutiles ou lourds (comme les CSV).
 
 4.2 Sauvegarder localement avec un message
+```bash
 git commit -m "Ajout de la question 3"
-
+```
 
 Cette commande enregistre définitivement les fichiers préparés avec git add.
 Vous pouvez ainsi garder une trace des modifications dans le temps.
@@ -68,9 +70,9 @@ Métaphore : vous rangez votre classeur dans votre armoire avec une étiquette (
 5. Mettre à jour votre branche avec les dernières modifications de main
 
 Avant d’envoyer votre travail, il faut vous assurer que votre branche est à jour avec la branche principale (main) :
-
+```bash
 git pull origin main
-
+```
 
 Cela récupère les dernières modifications faites sur main et les intègre dans votre branche.
 
@@ -78,16 +80,16 @@ S’il y a des conflits :
 
 Git vous les signalera et vous guidera pour les résoudre.
 Une fois réglés, validez avec :
-
+```bash
 git add nom_du_fichier_conflit.ipynb
 git commit -m "Résolution de conflit"
-
+```
 6. Envoyer votre travail sur GitHub
 
 Une fois vos modifications terminées et testées, envoyez votre branche sur GitHub :
-
+```bash
 git push origin prenom-nom
-
+```
 Explication :
 
 push : envoie vos modifications locales sur GitHub.
@@ -114,15 +116,15 @@ Une fois votre PR validée et fusionnée dans main :
 Supprimez la branche sur GitHub (GitHub propose souvent un bouton “Delete branch”).
 
 Supprimez aussi la branche en local :
-
+```bash
 git branch -d prenom-nom
-
+```
 
 Puis repassez sur la branche principale :
-
+```bash
 git checkout main
 git pull origin main
-
+```
 
 Vous êtes maintenant à jour pour la suite du projet !
 
