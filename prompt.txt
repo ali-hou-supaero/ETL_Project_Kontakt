@@ -1,0 +1,12 @@
+i want to develop 2 codes. 1 code to simulate real world data and 1 code to visualize that data.
+
+the data i want to simulate is user data with user id, timestamp, latitude and longitude. 
+i want 10 000 samples of users scattered in France. there should be 3 clusters of users in paris, lyon and Marseille. 
+therefore there should be a lot of users in nearby geographic coordinates. 
+clusters should amount to 70% of all users and paris should amount to 50% of all users. 
+each sample row should have a timestamp really close. meaning that 9000 samples should have timestamp that is 08/10/2025 18h00. 
+the remaining 1000 should have timestamp randomized in that same day before 18h00. This code should output csv file with the simulated data.
+
+The second code should allow to visualize this data. the csv data file and the visualisation file will be in the same directory so it can be called directly in the code. 
+the visualisation code should output a plot of a map of France with all points displayed in it. 
+be careful here, the points generated should be in the France with latitude and longitude, and the visualisation should display the contour of France and all points should be within this map. 
