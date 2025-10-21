@@ -6,7 +6,7 @@ This module handles cleaning and transforming the extracted data:
 """
 
 import pandas as pd
-import numpy as np
+import datetime as dt
 
 def clean_users(user_df):
     """
@@ -39,7 +39,7 @@ def clean_users(user_df):
     
     # Remove users with invalid timestamp
     # Should be at 18:00:00
-    df = df[df['timestamp'].dt.hour == '18:00:00']
+    df = df[df['timestamp'].dt.hour == 18]
        
     # Convert altitude and longitude to numeric (handle non-numeric values)
     df['altitude'] = pd.to_numeric(df['altitude'], errors='coerce')
