@@ -37,16 +37,17 @@ def clean_users(user_df):
     df = df[(df['latitude'] >= -90) & (df['latitude'] <= 90)]
     df = df[(df['longitude'] >= -180) & (df['longitude'] <= 180)]
     
+    # Convert timestamp to DataTime
+    df['timestamp'] = pd.to_datetime(df['timestamp'], errors = 'coerce')
     # Remove users with invalid timestamp
     # Should be at 18:00:00
     df = df[df['timestamp'].dt.hour == 18]
        
     # Convert altitude and longitude to numeric (handle non-numeric values)
-    df['altitude'] = pd.to_numeric(df['altitude'], errors='coerce')
+    df['latitude'] = pd.to_numeric(df['latitude'], errors='coerce')
     df['longitude'] = pd.to_numeric(df['longitude'], errors='coerce')
     
-    # Convert timestamp to DataTime
-    df['timestamp'] = pd.to_datetime(df['timestamp'], errors = 'coerce')
+  
     
     # Print how many users remain after cleaning
     print(f"After cleaning: {len(df)} users remain")
