@@ -58,6 +58,8 @@ if __name__ == "__main__":
     main()
 
 
+### Exemple analyse de clusters d'utilisateurs
+
 from notif_meeting import notif_meeting
 
 # Étape 1 : définir ta chaîne de connexion PostgreSQL
@@ -67,8 +69,8 @@ db_url = "postgresql://fgerard:salmonelle@localhost:5432/kontakt_db"
 clusters = notif_meeting(
     db_url=db_url,
     table_name="users",
-    R=100,       # rayon de 1 km
-    N=10,          # au moins 2 utilisateurs dans le groupe
+    R=100,         # rayon de 100 m
+    N=10,          # au moins 10 utilisateurs dans le groupe
     timestamp_filter='2025-10-08 18:00:00+02:00'  # optionnel : filtre temporel
 )
 
