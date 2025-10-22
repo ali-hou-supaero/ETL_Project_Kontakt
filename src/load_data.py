@@ -102,23 +102,22 @@ def run_sample_queries():
     try:
         engine = create_engine(connection_string)
         
-        # Query 1: Airports by country
-        print("\n🌍 Number of users in Marseille:")
-        country_query = """
-        SELECT *
-        FROM users
-        WHERE latitude BETWEEN 43.20 AND 43.40
-          AND longitude BETWEEN 5.30 AND 5.45;
-        kontakt_db=# SELECT COUNT(*)
+        # Query 1: Users in Marseille
+        print("\n🌍 Number of users in Marseille area:")
+        query = """
+        SELECT COUNT(*)
         FROM users
         WHERE latitude BETWEEN 43.20 AND 43.40
           AND longitude BETWEEN 5.30 AND 5.45;
         """
-        country_results = pd.read_sql(country_query, engine)
-        print(country_results.to_string(index=False))
+        
+        results = pd.read_sql(query, engine)
+        print(results.to_string(index=False))
+
     
     except Exception as e:
         print(f"❌ Error running sample queries: {e}")
+
 
 def test_database_connection():
     """
@@ -184,5 +183,6 @@ if __name__ == "__main__":
         
         # Test loading (won't work until students implement it)
         load_to_database(sample_users)
+
     else:
         print("Fix database connection before testing loading functions")
