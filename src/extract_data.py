@@ -37,7 +37,7 @@ if __name__ == "__main__":
     """Test the extraction functions"""
     print("Testing extraction functions...\n")
     
-    # Test airport extraction
+    # Test user extraction
     users = extract_users()
     print(f"Airport extraction returned DataFrame with shape: {users.shape}")
     

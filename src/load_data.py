@@ -34,15 +34,11 @@ def load_to_database(users_df):
     print("💾 Loading data to PostgreSQL database...")
     
     # TODO: Create connection string using the function above
-    # connection_string = get_connection_string()
     connection_string = get_connection_string()
     
     try:
         # TODO: Create SQLAlchemy engine
-        # Hint: engine = create_engine(connection_string)
         engine = create_engine(connection_string)
-        
-        #print("⚠️  Database loading not yet implemented")
         
         
         # TODO: Load users data
@@ -79,66 +75,50 @@ def verify_data():
     try:
         # TODO: Create SQLAlchemy engine
         engine = create_engine(connection_string)
-        
-        
-        # TODO: Count users in database
-        # Hint: 
+               
+        # TODO: Count users in database 
         users_count = pd.read_sql("SELECT COUNT(*) as count FROM users", engine)
         print(f"📊 Users in database: {users_count.iloc[0]['count']}")
         
     
-        # # TODO: Show sample airport data
-        # sample_users = pd.read_sql("SELECT name, city, country FROM airports LIMIT 3", engine)
-        # print("\n📋 Sample users:")
-        # print(sample_users.to_string(index=False))
+        # TODO: Show sample airport data
+        sample_users = pd.read_sql("SELECT * FROM users LIMIT 3", engine)
+        print("\n📋 Sample users:")
+        print(sample_users.to_string(index=False))
         
        
     except Exception as e:
         print(f"❌ Error verifying data: {e}")
 
-# def run_sample_queries():
-#     """
-#     Run some interesting queries on the loaded data
-#     Students can use this to explore their data
-#     """
-#     print("📈 Running sample analysis queries...")
+def run_sample_queries():
+    """
+    Run some interesting queries on the loaded data
+    Students can use this to explore their data
+    """
+    print("📈 Running sample analysis queries...")
     
-#     connection_string = get_connection_string()
+    connection_string = get_connection_string()
     
-#     try:
-#         engine = create_engine(connection_string)
+    try:
+        engine = create_engine(connection_string)
         
-#         # Query 1: Airports by country
-#         print("\n🌍 Top 5 countries by number of airports:")
-#         country_query = """
-#         SELECT country, COUNT(*) as airport_count 
-#         FROM airports 
-#         WHERE country IS NOT NULL 
-#         GROUP BY country 
-#         ORDER BY airport_count DESC 
-#         LIMIT 5
-#         """
-#         country_results = pd.read_sql(country_query, engine)
-#         print(country_results.to_string(index=False))
-        
-#         # Query 2: Flight altitude analysis (if flight data exists)
-#         flight_check = pd.read_sql("SELECT COUNT(*) as count FROM flights", engine)
-#         if flight_check.iloc[0]['count'] > 0:
-#             print("\n✈️  Flight altitude statistics:")
-#             altitude_query = """
-#             SELECT 
-#                 COUNT(*) as total_flights,
-#                 ROUND(AVG(altitude)) as avg_altitude_ft,
-#                 ROUND(MIN(altitude)) as min_altitude_ft,
-#                 ROUND(MAX(altitude)) as max_altitude_ft
-#             FROM flights 
-#             WHERE altitude IS NOT NULL
-#             """
-#             altitude_results = pd.read_sql(altitude_query, engine)
-#             print(altitude_results.to_string(index=False))
-        
-#     except Exception as e:
-#         print(f"❌ Error running sample queries: {e}")
+        # Query 1: Airports by country
+        print("\n🌍 Number of users in Marseille:")
+        country_query = """
+        SELECT *
+        FROM users
+        WHERE latitude BETWEEN 43.20 AND 43.40
+          AND longitude BETWEEN 5.30 AND 5.45;
+        kontakt_db=# SELECT COUNT(*)
+        FROM users
+        WHERE latitude BETWEEN 43.20 AND 43.40
+          AND longitude BETWEEN 5.30 AND 5.45;
+        """
+        country_results = pd.read_sql(country_query, engine)
+        print(country_results.to_string(index=False))
+    
+    except Exception as e:
+        print(f"❌ Error running sample queries: {e}")
 
 def test_database_connection():
     """
