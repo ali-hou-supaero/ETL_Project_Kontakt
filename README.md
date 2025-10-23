@@ -41,8 +41,7 @@ This ETL project extracts user-related data, transforms it for analysis, and loa
      - Edit the PostgreSQL authentication parameters in src/load_data DATABASE_CONFIG (username and password).
 
 2. Run the pipeline
-     - Execute the main pipeline:
-         - python src/main.py
+     - Execute the main pipeline: python src/main.py
 
 3. Output
      - In the terminal, prints should notify that the pipeline was correctly executed
