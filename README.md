@@ -15,22 +15,27 @@ This ETL project extracts user-related data, transforms it for analysis, and loa
 
 ## Repository organization
 
+- docs/ — Report documents
+    - report.pdf — project report
+    - business_presentation.pdf — presentation done during the business model class
+    - dashboard.png — example dashboard to monitor business performances
+
 - data/ — Simulation and visualization code with associated csv data file and png visualization
     - simulate_and_visualize_france_users.py — script to generate simulated data and visualize it in a France map
     - simulated_users_france.csv — output csv data of simulated users
     - france_users_map.png — output visualization of simulated users
     
 
-- src/ — source code
+- src/ — ETL pipeline
     - extract_data.py — extract data from CSV file
     - load_data — script that handles PostgreSQL connection and loading
     - transform_data — script that handles non-valid data
 
-- output/ — output of notif_meeting.py
+- output/ — Output of notif_meeting.py
     - detected_clusters.csv — output csv data of detected clusters as calculated in notif_meeting.py
     - cluster_visualization.png — output visualization of clusters
 
-- ./
+- ./ — Code execution
     - main.py — main pipeline entrypoint (extract → transform → load → visualize)
     - notif_meeting.py — notifier for meeting-related events
     - cluster_visualisation.png — generated output showing clustering results
