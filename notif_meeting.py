@@ -54,7 +54,7 @@ def notif_meeting(db_url: str, table_name: str, R=1000, N=10, timestamp_filter=N
                 'longitude': row['longitude']
             })
     clusters_df = pd.DataFrame(clusters_data)
-    clusters_df.to_csv('data/detected_clusters.csv', index=False)
+    clusters_df.to_csv('output/detected_clusters.csv', index=False)
 
     # Return list of clusters
     return clusters

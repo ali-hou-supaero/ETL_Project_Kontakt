@@ -2,8 +2,11 @@
 
 ## Authors
 HOUSSENALY Ali
+
 GERARD François
+
 DUSOLLIER Baptiste
+
 SECHET Edouard
 
 ## Project overview
@@ -12,14 +15,24 @@ This ETL project extracts user-related data, transforms it for analysis, and loa
 
 ## Repository organization
 
-- data/ — raw and processed datasets with simulation and visualization code
+- data/ — Simulation and visualization code with associated csv data file and png visualization
+    - simulate_and_visualize_france_users.py — script to generate simulated data and visualize it in a France map
+    - simulated_users_france.csv — output csv data of simulated users
+    - france_users_map.png — output visualization of simulated users
+    
+
 - src/ — source code
     - extract_data.py — extract data from CSV file
     - load_data — script that handles PostgreSQL connection and loading
     - transform_data — script that handles non-valid data
+
+- output/ — output of notif_meeting.py
+    - detected_clusters.csv — output csv data of detected clusters as calculated in notif_meeting.py
+    - cluster_visualization.png — output visualization of clusters
+
 - ./
     - main.py — main pipeline entrypoint (extract → transform → load → visualize)
-    - notif_meeting.py — small notifier for meeting-related events
+    - notif_meeting.py — notifier for meeting-related events
     - cluster_visualisation.png — generated output showing clustering results
 
 ## How to run
@@ -33,4 +46,4 @@ This ETL project extracts user-related data, transforms it for analysis, and loa
 
 3. Output
      - In the terminal, prints should notify that the pipeline was correctly executed
-     - cluster_visualiztion.png should have been created or updated - you can modify parameters in the main function to test different cluster detection and visualization
+     - output/cluster_visualiztion.png should have been created or updated - you can modify parameters in the main function to test different cluster detection and visualization

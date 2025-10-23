@@ -67,8 +67,8 @@ def main():
     clusters = notif_meeting(
         db_url=db_url,
         table_name="users",
-        R=200,         # 200 meters radius
-        N=10,          # At least 10 users in the group
+        R=150,         # 150 meters radius
+        N=5,          # At least 5 users in the group
         timestamp_filter='2025-10-08 18:00:00+02:00'  # Time filter
     )
 
@@ -80,8 +80,9 @@ def main():
     # Step 6: Visualize user data
     print("\n=== VISUALIZATION ===")
     print("📊 Visualizing user data...")
-    visualize_data(csv_path='data/detected_clusters.csv', out_png='cluster_visualization.png', dotsize=3, n_points=None)
-    print("📊 Visualization saved to 'cluster_visualization.png'")
+    visualize_data(csv_path='output/detected_clusters.csv', out_png='output/cluster_visualization.png', dotsize=3, n_points=None)
+    print("\n")
+    print("📊 Visualization saved to 'output/cluster_visualization.png'")
 
 if __name__ == "__main__":
     main()
