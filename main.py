@@ -3,7 +3,7 @@
 Kontakt ETL Pipeline - Simple Version
 
 This script runs the complete ETL pipeline:
-1. Extract airport data from CSV and flight data from API
+1. Extract user data from CSV file
 2. Clean and transform the data
 3. Load the data into PostgreSQL database
 
@@ -12,7 +12,9 @@ Run with: python main.py
 
 from src.extract_data import extract_users
 from src.transform_data import clean_users
-from src.load_data import load_to_database, verify_data, run_sample_queries
+from src.load_data import load_to_database, verify_data, run_sample_queries, get_connection_string
+from notif_meeting import notif_meeting
+from data.simulate_and_visualize_france_users import visualize_data
 
 def main():
     """Run the complete ETL pipeline"""
@@ -23,30 +25,30 @@ def main():
     print("\n=== EXTRACTION ===")
     print("📥 Extracting data from sources...")
     
-    # TODO: Call the extraction functions
+    # Call the extraction functions
     users = extract_users()
 
    
     # Step 2: Transform data
     print("\n=== TRANSFORMATION ===")
     print("🔄 Cleaning and transforming data...")
-    
-    # TODO: Call the transformation functions
+
+    # Call the transformation functions
     clean_users_data = clean_users(users)
     
     
     # Step 3: Load data
     print("\n=== LOADING ===")
     print("💾 Loading data to database...")
-    
-    # TODO: Call the loading function
+
+    # Call the loading function
     load_to_database(clean_users_data)
     
     # Step 4: Verify everything worked
     print("\n=== VERIFICATION ===")
     print("✅ Verifying data was loaded correctly...")
-    
-    # TODO: Call the verification function
+
+    # Call the verification function
     verify_data()
 
     run_sample_queries()
@@ -54,29 +56,36 @@ def main():
     print("\n🎉 ETL Pipeline completed!")
     print("=" * 50)
 
+    # Step 5: Example of cluster analysis
+    print("\n=== EXAMPLE CLUSTER ANALYSIS ===")
+    print("📍 Detecting user clusters in the database...")
+
+    # Step 5.1: Define database connection parameters based on load_data.py information
+    db_url = get_connection_string()
+
+    # Step 5.2: Call the function on the "users" table
+    clusters = notif_meeting(
+        db_url=db_url,
+        table_name="users",
+        R=200,         # 200 meters radius
+        N=10,          # At least 10 users in the group
+        timestamp_filter='2025-10-08 18:00:00+02:00'  # Time filter
+    )
+
+    # Step 5.3: Display the results
+    print("📍 Detected clusters:")
+    for i, cluster in enumerate(clusters, 1):
+        print(f"Cluster {i}: {cluster}")
+
+    # Step 6: Visualize user data
+    print("\n=== VISUALIZATION ===")
+    print("📊 Visualizing user data...")
+    visualize_data(csv_path='data/detected_clusters.csv', out_png='cluster_visualization.png', dotsize=3, n_points=None)
+    print("📊 Visualization saved to 'cluster_visualization.png'")
+
 if __name__ == "__main__":
     main()
 
 
-### Exemple analyse de clusters d'utilisateurs
-
-from notif_meeting import notif_meeting
-
-# Étape 1 : définir ta chaîne de connexion PostgreSQL
-db_url = "postgresql://fgerard:salmonelle@localhost:5432/kontakt_db"
-
-# Étape 2 : appeler la fonction sur la table "users"
-clusters = notif_meeting(
-    db_url=db_url,
-    table_name="users",
-    R=100,         # rayon de 100 m
-    N=10,          # au moins 10 utilisateurs dans le groupe
-    timestamp_filter='2025-10-08 18:00:00+02:00'  # optionnel : filtre temporel
-)
-
-# Étape 3 : afficher les résultats
-print("📍 Clusters détectés :")
-for i, cluster in enumerate(clusters, 1):
-    print(f"Cluster {i}: {cluster}")
 
 

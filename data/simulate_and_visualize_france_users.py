@@ -1,10 +1,9 @@
-# simulate_and_visualize_france_users.py
-# Updated version — metropolitan France only, optional random subsampling for visualization
-# Usage:
-#   python simulate_and_visualize_france_users.py simulate
-#   python simulate_and_visualize_france_users.py visualize [N]
+# How to use:
+#   python simulate_and_visualize_france_users.py simulate : to generate simulated data CSV
+#   python simulate_and_visualize_france_users.py visualize : to plot all points
+#   python simulate_and_visualize_france_users.py visualize N : to plot N random points
 # Example:
-#   python simulate_and_visualize_france_users.py visualize 2000
+#   python simulate_and_visualize_france_users.py visualize 2000 : visualize France map with 2000 random points
 
 import sys
 import os

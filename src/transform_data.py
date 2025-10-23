@@ -6,7 +6,6 @@ This module handles cleaning and transforming the extracted data:
 """
 
 import pandas as pd
-import datetime as dt
 
 def clean_users(user_df):
     """
@@ -46,9 +45,7 @@ def clean_users(user_df):
     # Convert altitude and longitude to numeric (handle non-numeric values)
     df['latitude'] = pd.to_numeric(df['latitude'], errors='coerce')
     df['longitude'] = pd.to_numeric(df['longitude'], errors='coerce')
-    
-  
-    
+       
     # Print how many users remain after cleaning
     print(f"After cleaning: {len(df)} users remain")
     

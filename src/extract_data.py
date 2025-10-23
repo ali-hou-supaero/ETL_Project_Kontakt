@@ -1,21 +1,18 @@
 """
 Data Extraction Module
 
-This module handles extracting data from a csv source:
-- location data from CSV file
+This module handles extracting data from the CSV file:
+- Extract users data from simulated CSV file
 """
 
 import pandas as pd
-import requests
-import time
-import os
 
 def extract_users():
     """
     Extract user data from CSV file
     
     Returns:
-        pandas.DataFrame: Location data with columns like name, city, country, coordinates
+        pandas.DataFrame: User data containing user_id, timestamp, latitude, longitude
     """
     print("📄 Reading user data from CSV...")
     
@@ -39,7 +36,7 @@ if __name__ == "__main__":
     
     # Test user extraction
     users = extract_users()
-    print(f"Airport extraction returned DataFrame with shape: {users.shape}")
-    
+    print(f"User extraction returned DataFrame with shape: {users.shape}")
+
     
 

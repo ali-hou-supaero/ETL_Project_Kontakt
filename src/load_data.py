@@ -8,13 +8,12 @@ This module handles loading cleaned data into PostgreSQL database:
 
 import pandas as pd
 from sqlalchemy import create_engine, text
-import psycopg2
 
 # Database connection configuration
-# TODO: Update these values with your actual database credentials
+#################### YOU SHOULD MODIFY USERNAME AND PASSWORD ####################
 DATABASE_CONFIG = {
-    'username': 'fgerard',
-    'password': 'salmonelle', 
+    'username': 'aliho', # your PostgreSQL username
+    'password': 'mdpfacile', # your PostgreSQL password
     'host': 'localhost',
     'port': '5432',
     'database': 'kontakt_db'
@@ -32,27 +31,18 @@ def load_to_database(users_df):
         users_df (pandas.DataFrame): Cleaned users data
     """
     print("💾 Loading data to PostgreSQL database...")
-    
-    # TODO: Create connection string using the function above
+
+    # Create connection string using the function above
     connection_string = get_connection_string()
     
     try:
-        # TODO: Create SQLAlchemy engine
+        # Create SQLAlchemy engine
         engine = create_engine(connection_string)
-        
-        
-        # TODO: Load users data
-        
+
+        # Load users data
         users_df.to_sql('users', engine, if_exists='replace', index=False)
-        # 
-        # Parameters explanation:
-        # - 'users': table name in database
-        # - engine: database connection
-        # - if_exists='replace': replace table if it exists (use 'append' to add to existing data)
-        # - index=False: don't include pandas row index as a column
-        
-              
-        # TODO: Print loading statistics
+
+        # Print loading statistics
         print(f"✅ Loaded {len(users_df)} users to database")
         
         
@@ -60,7 +50,7 @@ def load_to_database(users_df):
         print(f"❌ Error loading data to database: {e}")
         print("💡 Make sure:")
         print("   - PostgreSQL is running")
-        print("   - Database 'airlife_db' exists") 
+        print("   - Database 'kontakt_db' exists") 
         print("   - Username and password are correct")
         print("   - Tables are created (run database_setup.sql)")
 
@@ -73,15 +63,14 @@ def verify_data():
     connection_string = get_connection_string()
     
     try:
-        # TODO: Create SQLAlchemy engine
+        # Create SQLAlchemy engine
         engine = create_engine(connection_string)
-               
-        # TODO: Count users in database 
+
+        # Count users in database
         users_count = pd.read_sql("SELECT COUNT(*) as count FROM users", engine)
         print(f"📊 Users in database: {users_count.iloc[0]['count']}")
-        
-    
-        # TODO: Show sample airport data
+
+        # Show sample user data
         sample_users = pd.read_sql("SELECT * FROM users LIMIT 3", engine)
         print("\n📋 Sample users:")
         print(sample_users.to_string(index=False))
@@ -93,7 +82,6 @@ def verify_data():
 def run_sample_queries():
     """
     Run some interesting queries on the loaded data
-    Students can use this to explore their data
     """
     print("📈 Running sample analysis queries...")
     
@@ -102,15 +90,36 @@ def run_sample_queries():
     try:
         engine = create_engine(connection_string)
         
-        # Query 1: Users in Marseille
-        print("\n🌍 Number of users in Marseille area:")
+        # Query 1: Users in Paris and proportion of total users
+        print("\n🌍 Number of users in Paris area and proportion of total users:")
         query = """
-        SELECT COUNT(*)
+        SELECT COUNT(*) as user_count, (COUNT(*) * 100.0 / (SELECT COUNT(*) FROM users)) as proportion
+        FROM users
+        WHERE latitude BETWEEN 48.815 AND 48.902
+          AND longitude BETWEEN 2.224 AND 2.469;
+        """
+        results = pd.read_sql(query, engine)
+        print(results.to_string(index=False))
+
+        # Query 2: Users in Marseille and proportion of total users
+        print("\n🌍 Number of users in Marseille area and proportion of total users:")
+        query = """
+        SELECT COUNT(*) as user_count, (COUNT(*) * 100.0 / (SELECT COUNT(*) FROM users)) as proportion
         FROM users
         WHERE latitude BETWEEN 43.20 AND 43.40
           AND longitude BETWEEN 5.30 AND 5.45;
         """
-        
+        results = pd.read_sql(query, engine)
+        print(results.to_string(index=False))
+
+        # Query 3: Users in Lyon and proportion of total users
+        print("\n🌍 Number of users in Lyon area and proportion of total users:")
+        query = """
+        SELECT COUNT(*) as user_count, (COUNT(*) * 100.0 / (SELECT COUNT(*) FROM users)) as proportion
+        FROM users
+        WHERE latitude BETWEEN 45.70 AND 45.85
+          AND longitude BETWEEN 4.80 AND 5.00;
+        """
         results = pd.read_sql(query, engine)
         print(results.to_string(index=False))
 
@@ -122,7 +131,6 @@ def run_sample_queries():
 def test_database_connection():
     """
     Test database connection without loading data
-    Students can use this to debug connection issues
     """
     print("🔌 Testing database connection...")
     
@@ -142,15 +150,15 @@ def test_database_connection():
             SELECT table_name 
             FROM information_schema.tables 
             WHERE table_schema = 'public' 
-            AND table_name IN ('airports', 'flights')
+            AND table_name IN ('user_id', 'timestamp', 'latitude', 'longitude')
             ORDER BY table_name
             """
             tables = pd.read_sql(tables_query, engine)
-            
-            if len(tables) == 2:
+
+            if len(tables) == 4:
                 print("✅ Required tables (users) exist")
             else:
-                print(f"⚠️  Found {len(tables)} tables, expected 2")
+                print(f"⚠️  Found {len(tables)} tables, expected 4")
                 print("💡 Run database_setup.sql to create tables")
             
             return True
