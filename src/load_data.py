@@ -9,19 +9,29 @@ This module handles loading cleaned data into PostgreSQL database:
 import pandas as pd
 from sqlalchemy import create_engine, text
 
-# Database connection configuration
-#################### YOU SHOULD MODIFY USERNAME AND PASSWORD ####################
-DATABASE_CONFIG = {
-    'username': 'aliho', # your PostgreSQL username
-    'password': 'mdpfacile', # your PostgreSQL password
-    'host': 'localhost',
-    'port': '5432',
-    'database': 'kontakt_db'
-}
-
+# Connection settings are supplied by the environment, never committed credentials.
 def get_connection_string():
-    """Build PostgreSQL connection string"""
-    return f"postgresql://{DATABASE_CONFIG['username']}:{DATABASE_CONFIG['password']}@{DATABASE_CONFIG['host']}:{DATABASE_CONFIG['port']}/{DATABASE_CONFIG['database']}"
+    """Build a PostgreSQL URL from KONTAKT_DB_* environment variables.
+
+    Required: KONTAKT_DB_USER, KONTAKT_DB_PASSWORD.
+    Optional: KONTAKT_DB_HOST, KONTAKT_DB_PORT, KONTAKT_DB_NAME.
+    """
+    from os import environ
+    from sqlalchemy.engine import URL
+
+    required = ("KONTAKT_DB_USER", "KONTAKT_DB_PASSWORD")
+    missing = [name for name in required if not environ.get(name)]
+    if missing:
+        raise ValueError("Missing database settings: " + ", ".join(missing))
+
+    return URL.create(
+        "postgresql+psycopg2",
+        username=environ["KONTAKT_DB_USER"],
+        password=environ["KONTAKT_DB_PASSWORD"],
+        host=environ.get("KONTAKT_DB_HOST", "localhost"),
+        port=int(environ.get("KONTAKT_DB_PORT", "5432")),
+        database=environ.get("KONTAKT_DB_NAME", "kontakt_db"),
+    ).render_as_string(hide_password=False)
 
 def load_to_database(users_df):
     """
@@ -168,7 +178,7 @@ def test_database_connection():
             
     except Exception as e:
         print(f"❌ Database connection failed: {e}")
-        print("💡 Check your connection settings in DATABASE_CONFIG")
+        print("💡 Check your KONTAKT_DB_* environment variables")
         return False
 
 if __name__ == "__main__":
